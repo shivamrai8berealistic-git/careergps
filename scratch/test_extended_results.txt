@@ -1,0 +1,54 @@
+﻿=== EXTENDED TEST: Additional Job Sites ===
+
+[TEST 1/4] linkedin.com
+URL: https://www.linkedin.com/jobs/view/4398339581
+[scrapeJobFromUrl] Processing URL from: www.linkedin.com
+[fetchLinkedIn] Fetching Guest API: https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/4398339581
+[extractFromLinkedInHtml] Found: "Sales Coordinator" at "Mahindra Holidays & Resorts India Limited"
+[scrapeJobFromUrl] Γ£à Success: "Sales Coordinator" at "Mahindra Holidays & Resorts India Limited"
+Γ£à PASS (2490ms)
+   Title: "Sales Coordinator"
+   Company: "Mahindra Holidays & Resorts India Limited"
+   Location: "Delhi, India"
+   Description: 1448 chars
+---
+
+[TEST 2/4] wellfound.com
+URL: https://wellfound.com/jobs/3273698-full-stack-developer
+[scrapeJobFromUrl] Processing URL from: wellfound.com
+[fetchGeneric] Attempting direct fetch: https://wellfound.com/jobs/3273698-full-stack-developer
+[fetchGeneric] Trying Jina Reader: https://wellfound.com/jobs/3273698-full-stack-developer
+ΓÜá∩╕Å FAIL (4830ms): We couldn't access this job page. The site (wellfound.com) is blocking automated access.
+
+Try one of these instead:
+ΓÇó Copy the job description and use
+---
+
+node : [fetchGeneric] Jina also failed: Site returned a security challenge page
+At line:1 char:1
++ node node_modules/tsx/dist/cli.mjs -r tsconfig-paths/register scratch ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([fetchGeneric] ... challenge page:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[TEST 3/4] internshala.com
+URL: https://internshala.com/internship/detail/full-stack-development-work-from-home-internship-at-devtown1748355710
+[scrapeJobFromUrl] Processing URL from: internshala.com
+[fetchGeneric] Attempting direct fetch: https://internshala.com/internship/detail/full-stack-development-work-from-home-internship-at-devtown1748355710
+[fetchGeneric] Trying Jina Reader: https://internshala.com/internship/detail/full-stack-development-work-from-home-internship-at-devtown1748355710
+[fetchGeneric] Jina success. Length: 12517
+[fetchGeneric] Sending jina content to AI for extraction...
+[scrapeJobFromUrl] Unexpected error: FAILED_PRECONDITION: Please pass in the API key or set the GEMINI_API_KEY or 
+GOOGLE_API_KEY environment variable.
+For more details see https://genkit.dev/docs/plugins/google-genai/
+ΓÜá∩╕Å FAIL (2746ms): Could not import this job. The site may be blocking access or the link may be invalid.
+
+Try one of these instead:
+ΓÇó Copy the job description and use "
+---
+
+[TEST 4/4] simplyhired.co.in
+URL: https://www.simplyhired.co.in/search?q=software+engineer&l=Delhi
+ΓÜá∩╕Å FAIL (0ms): This looks like a job search page, not a specific job listing. Please paste the URL of a single job posting instead.
+---
+

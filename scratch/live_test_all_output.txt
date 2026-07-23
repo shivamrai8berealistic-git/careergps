@@ -1,0 +1,111 @@
+﻿=== STARTING LIVE TEST OF MULTIPLE JOB URLS ===
+
+[TEST 1/10] URL: https://www.linkedin.com/jobs/collections/easy-apply/?currentJobId=4398339581&discover=true
+[scrapeJobFromUrl] Successfully retrieved content. Length: 35654
+SUCCESS:
+{
+  "title": "No Job Found",
+  "company": "N/A",
+  "descPreview": "The provided content is a LinkedIn login page, not a job posting. No job details can be extracted...."
+}
+-------------------------------------------
+
+[TEST 2/10] URL: https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4361011095
+[scrapeJobFromUrl] Successfully retrieved content. Length: 35496
+SUCCESS:
+{
+  "title": "",
+  "company": "",
+  "descPreview": "..."
+}
+-------------------------------------------
+
+[TEST 3/10] URL: https://www.naukri.com/job-listings-sales-executive-zipaworld-noida-2-to-5-years-240426501793?src=jobsearchDesk&sid=17772114807257262&xp=2&px=1&nignbevent_src=jobsearchDeskGNB
+[scrapeJobFromUrl] Successfully retrieved content. Length: 132880
+SUCCESS:
+{
+  "title": "Sales Executive",
+  "company": "Zipaworld Innovation",
+  "location": "Noida",
+  "employmentType": "Full Time",
+  "descPreview": "We are looking for a highly motivated and results-driven Sales Executive to join our team at Zipawor..."
+}
+-------------------------------------------
+
+[TEST 4/10] URL: https://www.naukri.com/job-listings-sales-executive-m-s-vinit-enterprises-jalandhar-0-to-5-years-200426016741?src=simjobsjd_rt
+[scrapeJobFromUrl] Successfully retrieved content. Length: 99703
+SUCCESS:
+{
+  "title": "Sales Executive",
+  "company": "M/S Vinit Enterprises",
+  "location": "Jalandhar",
+  "employmentType": "Full Time",
+  "descPreview": "Role & responsibilities: We are looking for a dynamic and results-driven Sales Executive to join our..."
+}
+-------------------------------------------
+
+[TEST 5/10] URL: https://www.foundit.in/job/senior-consultant-sap-sd-argano-software-delhi-36070703
+[scrapeJobFromUrl] Successfully retrieved content. Length: 144439
+SUCCESS:
+{
+  "title": "Senior Consultant - SAP SD",
+  "company": "Argano Software",
+  "location": "Delhi, Hyderabad",
+  "employmentType": "Full time",
+  "descPreview": "Facilitate the implementation and support of SAP SD. Perform detailed analysis of complex business p..."
+}
+-------------------------------------------
+
+[TEST 6/10] URL: https://www.foundit.in/job/visa-consultant-fresher-zigsaw-ahmedabad-51130861
+[scrapeJobFromUrl] Successfully retrieved content. Length: 125074
+SUCCESS:
+{
+  "title": "Visa Consultant ( Fresher )",
+  "company": "Zigsaw",
+  "location": "Ahmedabad, India",
+  "employmentType": "Full time",
+  "descPreview": "Visa Consultant Locations 1: Iskcon Cross Rd, Sanidhya, Ahmedabad, Gujarat 380015 Location 2: Sarabh..."
+}
+-------------------------------------------
+
+[TEST 7/10] URL: https://www.glassdoor.co.in/job-listing/market-research-digitallancers-JV_IC2921225_KO0,15_KE16,30.htm?jl=1008973314282&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Successfully retrieved content. Length: 40488
+SUCCESS:
+{
+  "title": "Security | Glassdoor",
+  "company": "Glassdoor",
+  "descPreview": "Glassdoor has been built on the contributions of real employees and job seekers. We use advanced sec..."
+}
+-------------------------------------------
+
+[TEST 8/10] URL: https://www.glassdoor.co.in/Job/new-delhi-jobs-SRCH_IL.0,9_IC2891681.htm
+[scrapeJobFromUrl] Successfully retrieved content. Length: 34119
+SUCCESS:
+{
+  "title": "Security | Glassdoor",
+  "company": "Glassdoor",
+  "descPreview": "Glassdoor has been built on the contributions of real employees and job seekers. We use advanced sec..."
+}
+-------------------------------------------
+
+[TEST 9/10] URL: https://in.indeed.com/viewjob?jk=f05419a8d725949c&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Successfully retrieved content. Length: 9078
+SUCCESS:
+{
+  "title": "",
+  "company": "",
+  "descPreview": "..."
+}
+-------------------------------------------
+
+[TEST 10/10] URL: https://in.indeed.com/viewjob?jk=2ac593637f7c4eed&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Successfully retrieved content. Length: 9078
+SUCCESS:
+{
+  "title": "Failed to retrieve job posting: Security Check on Indeed.com",
+  "company": "N/A",
+  "descPreview": "The page returned a security check/CAPTCHA from Indeed.com, preventing the extraction of the actual ..."
+}
+-------------------------------------------
+
+=== LIVE TEST COMPLETE ===

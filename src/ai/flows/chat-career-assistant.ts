@@ -10,6 +10,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
+
 // Input Schema for the external function and flow
 const AICareerAssistantChatInputSchema = z.object({
   userQuestion: z.string().describe("The user's question or query for the AI career assistant."),
@@ -24,14 +25,14 @@ const AICareerAssistantChatOutputSchema = z.string().describe("The AI assistant'
 export type AICareerAssistantChatOutput = z.infer<typeof AICareerAssistantChatOutputSchema>;
 
 // Wrapper function to call the Genkit flow
-import { checkAndIncrementQuota } from '@/lib/quota';
+import { spendCredits } from '@/lib/credit-ledger';
 
 export async function chatCareerAssistant(input: AICareerAssistantChatInput & { userId: string }): Promise<AICareerAssistantChatOutput> {
   const { userId, ...flowInput } = input;
 
-  const quota = await checkAndIncrementQuota(userId, 'assistantMessages');
+  const quota = await spendCredits(userId, 'chatMessage');
   if (!quota.allowed) {
-    throw new Error(`QUOTA_EXCEEDED: You have used all ${quota.limit} free AI assistant messages for this month. Please upgrade to Pro for more.`);
+    throw new Error(`QUOTA_EXCEEDED: You need ${quota.required} credits for this action. You have ${quota.remaining} credits. Please upgrade or earn more credits.`);
   }
 
   return aiCareerAssistantChatFlow(flowInput);
@@ -50,7 +51,7 @@ const careerAssistantPrompt = ai.definePrompt({
   name: 'careerAssistantPrompt',
   input: {schema: CareerAssistantPromptInputSchema},
   output: {schema: AICareerAssistantChatOutputSchema},
-  model: 'gemini-1.5-flash-latest',
+  model: 'googleai/gemini-2.5-flash',
   prompt: `You are an AI Career Assistant, designed to help job seekers with their career questions.
 You have access to the user's profile, resume, and saved job information.
 Use this information to provide accurate, helpful, and contextual advice.

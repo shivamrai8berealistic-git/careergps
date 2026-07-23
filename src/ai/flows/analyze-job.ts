@@ -12,6 +12,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
+
 // From "3. User profile system"
 const UserProfileSchema = z.object({
   fullName: z.string().optional(),
@@ -94,14 +95,14 @@ const AnalyzeJobOutputSchema = z.object({
 });
 export type AnalyzeJobOutput = z.infer<typeof AnalyzeJobOutputSchema>;
 
-import { checkAndIncrementQuota } from '@/lib/quota';
+import { spendCredits } from '@/lib/credit-ledger';
 
 export async function analyzeJob(input: AnalyzeJobInput & { userId: string }): Promise<AnalyzeJobOutput> {
   const { userId, ...flowInput } = input;
   
-  const quota = await checkAndIncrementQuota(userId, 'jobAnalyses');
+  const quota = await spendCredits(userId, 'jobAnalysis');
   if (!quota.allowed) {
-    throw new Error(`QUOTA_EXCEEDED: You have used all ${quota.limit} free job analyses for this month. Please upgrade to Pro for more.`);
+    throw new Error(`QUOTA_EXCEEDED: You need ${quota.required} credits for this action. You have ${quota.remaining} credits. Please upgrade or earn more credits.`);
   }
 
   return analyzeJobFlow(flowInput);
@@ -111,7 +112,7 @@ const analyzeJobPrompt = ai.definePrompt({
   name: 'analyzeJobPrompt',
   input: { schema: AnalyzeJobInputSchema },
   output: { schema: AnalyzeJobOutputSchema },
-  model: 'gemini-1.5-flash-latest',
+  model: 'googleai/gemini-2.5-flash',
   prompt: `You are an expert AI Job Application Copilot. Your task is to analyze a job description, a user's profile, and their structured resume to determine the match, identify skill alignments and gaps, and provide actionable recommendations.
 
 Consider the following information:

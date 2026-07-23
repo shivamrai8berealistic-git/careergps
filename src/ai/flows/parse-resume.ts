@@ -10,6 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
+
 const ExperienceEntrySchema = z.object({
   title: z.string().describe('The job title.'),
   company: z.string().describe('The company name.'),
@@ -53,14 +54,14 @@ const ParseResumeOutputSchema = z.object({
 });
 export type ParseResumeOutput = z.infer<typeof ParseResumeOutputSchema>;
 
-import { checkAndIncrementQuota } from '@/lib/quota';
+import { spendCredits } from '@/lib/credit-ledger';
 
 export async function parseResume(input: ParseResumeInput & { userId: string }): Promise<ParseResumeOutput> {
   const { userId, ...flowInput } = input;
 
-  const quota = await checkAndIncrementQuota(userId, 'resumeOptimizations');
+  const quota = await spendCredits(userId, 'resumeParse');
   if (!quota.allowed) {
-    throw new Error(`QUOTA_EXCEEDED: You have used all ${quota.limit} free resume analyses for this month. Please upgrade to Pro for more.`);
+    throw new Error(`QUOTA_EXCEEDED: You need ${quota.required} credits for this action. You have ${quota.remaining} credits. Please upgrade or earn more credits.`);
   }
 
   return parseResumeFlow(flowInput);
@@ -70,7 +71,7 @@ const resumeParsingPrompt = ai.definePrompt({
   name: 'resumeParsingPrompt',
   input: { schema: ParseResumeInputSchema },
   output: { schema: ParseResumeOutputSchema },
-  model: 'gemini-1.5-flash-latest',
+  model: 'googleai/gemini-2.5-flash',
   prompt: `You are an expert resume parser. Your task is to extract all relevant information from the provided resume and structure it into a JSON object according to the specified output schema.
 
 Carefully read through the resume and identify:

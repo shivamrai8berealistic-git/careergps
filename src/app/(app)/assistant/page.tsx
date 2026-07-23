@@ -18,7 +18,7 @@ export default function AssistantPage() {
 
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<any[]>([
-    { role: 'assistant', content: "Hello! I'm your AI Career Assistant. I can help you with resume advice, job search strategies, or interview preparation. Since I have access to your profile and saved jobs, feel free to ask specific questions!" }
+    { role: 'assistant', content: "Welcome to your Career Copilot. I can help with strategy, resume polish, or interview prep based on your profile." }
   ]);
   const [isSending, setIsSending] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -66,8 +66,8 @@ export default function AssistantPage() {
     <div className="flex flex-col h-[calc(100vh-140px)] gap-6 animate-in fade-in duration-500">
        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight font-headline">AI Career Assistant</h1>
-          <p className="text-muted-foreground">Your personal job search coach, powered by Gemini.</p>
+          <h1 className="text-3xl font-bold tracking-tight font-headline">Smart Career Assistant</h1>
+          <p className="text-muted-foreground">Intelligent career assistance for your job search strategies.</p>
         </div>
       </div>
 

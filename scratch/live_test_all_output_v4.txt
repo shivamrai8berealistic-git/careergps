@@ -1,0 +1,131 @@
+﻿=== STARTING LIVE TEST OF MULTIPLE JOB URLS ===
+
+[TEST 1/10] URL: https://www.linkedin.com/jobs/collections/easy-apply/?currentJobId=4398339581&discover=true
+[scrapeJobFromUrl] Normalized LinkedIn URL to: https://www.linkedin.com/jobs/view/4398339581
+[scrapeJobFromUrl] Attempting Fast Path fetch for: https://www.linkedin.com/jobs/view/4398339581
+[scrapeJobFromUrl] Attempting Jina fallback for: https://www.linkedin.com/jobs/view/4398339581
+FAILED: Could not retrieve the job page. The site may be blocking access. Try copying and pasting the job description instead. (The job board (www.linkedin.com) is blocking automated access. Please use our Browser Extension or copy-paste the description.)
+-------------------------------------------
+
+node : [scrapeJobFromUrl] All scraping paths failed: Error: Jina error: 451
+At line:1 char:1
++ node node_modules/tsx/dist/cli.mjs -r tsconfig-paths/register live_te ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([scrapeJobFromU...Jina error: 451:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at scrapeJobFromUrl (C:\Users\user\Downloads\Career Pilot AI Project\src\actions\scrape-job.ts:173:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async main (C:\Users\user\Downloads\Career Pilot AI Project\live_test_all.ts:25:22)
+[TEST 2/10] URL: https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4361011095
+[scrapeJobFromUrl] Normalized LinkedIn URL to: https://www.linkedin.com/jobs/view/4361011095
+[scrapeJobFromUrl] Attempting Fast Path fetch for: https://www.linkedin.com/jobs/view/4361011095
+[scrapeJobFromUrl] Attempting Jina fallback for: https://www.linkedin.com/jobs/view/4361011095
+[scrapeJobFromUrl] All scraping paths failed: Error: Jina error: 451
+    at scrapeJobFromUrl (C:\Users\user\Downloads\Career Pilot AI Project\src\actions\scrape-job.ts:173:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async main (C:\Users\user\Downloads\Career Pilot AI Project\live_test_all.ts:25:22)
+FAILED: Could not retrieve the job page. The site may be blocking access. Try copying and pasting the job description instead. (The job board (www.linkedin.com) is blocking automated access. Please use our Browser Extension or copy-paste the description.)
+-------------------------------------------
+
+[TEST 3/10] URL: https://www.naukri.com/job-listings-sales-executive-zipaworld-noida-2-to-5-years-240426501793?src=jobsearchDesk&sid=17772114807257262&xp=2&px=1&nignbevent_src=jobsearchDeskGNB
+[scrapeJobFromUrl] Attempting Fast Path fetch for: https://www.naukri.com/job-listings-sales-executive-zipaworld-noida-2-to-5-years-240426501793?src=jobsearchDesk&sid=17772114807257262&xp=2&px=1&nignbevent_src=jobsearchDeskGNB
+[scrapeJobFromUrl] Fast Path success! Length: 35314
+SUCCESS:
+{
+  "title": "Sales Executive",
+  "company": "Zipaworld",
+  "location": "Noida",
+  "descPreview": "Responsible for generating sales with existing customers and developing new accounts.Manage and moni..."
+}
+-------------------------------------------
+
+[TEST 4/10] URL: https://www.naukri.com/job-listings-sales-executive-m-s-vinit-enterprises-jalandhar-0-to-5-years-200426016741?src=simjobsjd_rt
+[scrapeJobFromUrl] Attempting Fast Path fetch for: https://www.naukri.com/job-listings-sales-executive-m-s-vinit-enterprises-jalandhar-0-to-5-years-200426016741?src=simjobsjd_rt
+[scrapeJobFromUrl] Fast Path success! Length: 34902
+SUCCESS:
+{
+  "title": "Sales Executive",
+  "company": "M/s Vinit Enterprises",
+  "location": "Jalandhar",
+  "descPreview": "Job description Hiring for Sales Executive Roles and Responsibilities Sales Executive Desired Candid..."
+}
+-------------------------------------------
+
+[TEST 5/10] URL: https://www.foundit.in/job/senior-consultant-sap-sd-argano-software-delhi-36070703
+[scrapeJobFromUrl] Attempting Fast Path fetch for: https://www.foundit.in/job/senior-consultant-sap-sd-argano-software-delhi-36070703
+[scrapeJobFromUrl] Attempting Jina fallback for: https://www.foundit.in/job/senior-consultant-sap-sd-argano-software-delhi-36070703
+[scrapeJobFromUrl] Jina fallback success. Length: 14442
+SUCCESS:
+{
+  "title": "Senior Consultant - SAP SD",
+  "company": "Argano Software",
+  "location": "Delhi, Hyderabad",
+  "employmentType": "Full time",
+  "descPreview": "Facilitate the implementation and support of SAP SD Perform detailed analysis of complex business pr..."
+}
+-------------------------------------------
+
+[TEST 6/10] URL: https://www.foundit.in/job/visa-consultant-fresher-zigsaw-ahmedabad-51130861
+[scrapeJobFromUrl] Attempting Fast Path fetch for: https://www.foundit.in/job/visa-consultant-fresher-zigsaw-ahmedabad-51130861
+[scrapeJobFromUrl] Attempting Jina fallback for: https://www.foundit.in/job/visa-consultant-fresher-zigsaw-ahmedabad-51130861
+[scrapeJobFromUrl] Jina fallback success. Length: 12618
+SUCCESS:
+{
+  "title": "Visa Consultant ( Fresher )",
+  "company": "Zigsaw",
+  "location": "Ahmedabad, India",
+  "employmentType": "Full time",
+  "descPreview": "Visa Consultant Locations 1: Iskcon Cross Rd, Sanidhya, Ahmedabad, Gujarat 380015 Location 2: Sarabh..."
+}
+-------------------------------------------
+
+[TEST 7/10] URL: https://www.glassdoor.co.in/job-listing/market-research-digitallancers-JV_IC2921225_KO0,15_KE16,30.htm?jl=1008973314282&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Attempting Fast Path fetch for: https://www.glassdoor.co.in/job-listing/market-research-digitallancers-JV_IC2921225_KO0,15_KE16,30.htm?jl=1008973314282&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Attempting Jina fallback for: https://www.glassdoor.co.in/job-listing/market-research-digitallancers-JV_IC2921225_KO0,15_KE16,30.htm?jl=1008973314282&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Jina fallback success. Length: 5473
+SUCCESS:
+{
+  "title": "Not Found - Security Challenge",
+  "company": "Not Found - Security Challenge",
+  "descPreview": "The provided raw page content is a security challenge page ('Just a moment...' / CAPTCHA) from Glass..."
+}
+-------------------------------------------
+
+[TEST 8/10] URL: https://www.glassdoor.co.in/Job/new-delhi-jobs-SRCH_IL.0,9_IC2891681.htm
+[scrapeJobFromUrl] Attempting Fast Path fetch for: https://www.glassdoor.co.in/Job/new-delhi-jobs-SRCH_IL.0,9_IC2891681.htm
+[scrapeJobFromUrl] Attempting Jina fallback for: https://www.glassdoor.co.in/Job/new-delhi-jobs-SRCH_IL.0,9_IC2891681.htm
+[scrapeJobFromUrl] Jina fallback success. Length: 5380
+SUCCESS:
+{
+  "title": "Just a moment...",
+  "company": "Glassdoor",
+  "descPreview": "Glassdoor has been built on the contributions of real employees and job seekers. We use advanced sec..."
+}
+-------------------------------------------
+
+[TEST 9/10] URL: https://in.indeed.com/viewjob?jk=f05419a8d725949c&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Attempting Fast Path fetch for: https://in.indeed.com/viewjob?jk=f05419a8d725949c&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Attempting Jina fallback for: https://in.indeed.com/viewjob?jk=f05419a8d725949c&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Jina fallback success. Length: 1524
+SUCCESS:
+{
+  "title": "",
+  "company": "",
+  "descPreview": "..."
+}
+-------------------------------------------
+
+[TEST 10/10] URL: https://in.indeed.com/viewjob?jk=2ac593637f7c4eed&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Attempting Fast Path fetch for: https://in.indeed.com/viewjob?jk=2ac593637f7c4eed&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Attempting Jina fallback for: https://in.indeed.com/viewjob?jk=2ac593637f7c4eed&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Jina fallback success. Length: 1524
+SUCCESS:
+{
+  "title": "N/A",
+  "company": "N/A",
+  "descPreview": "The provided page content is an error page (\"Just a moment...\", \"Additional Verification Required\") ..."
+}
+-------------------------------------------
+
+=== LIVE TEST COMPLETE ===

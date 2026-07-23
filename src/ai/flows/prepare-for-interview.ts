@@ -10,6 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
+
 const JobJsonSchema = z.object({
   title: z.string().describe('The job title.'),
   company: z.string().describe('The company offering the job.'),
@@ -30,6 +31,7 @@ const UserProfileSchema = z.object({
 });
 
 const InterviewPrepInputSchema = z.object({
+  jobId: z.string().optional().describe('The ID of the job this interview prep is for.'),
   jobJson: JobJsonSchema.describe('The structured job description for which to prepare.'),
   userProfile: UserProfileSchema.describe('The user\'s professional profile.'),
 });
@@ -43,24 +45,45 @@ const InterviewPrepOutputSchema = z.object({
 });
 export type InterviewPrepOutput = z.infer<typeof InterviewPrepOutputSchema>;
 
-import { checkAndIncrementQuota } from '@/lib/quota';
+import { spendCredits } from '@/lib/credit-ledger';
+import { logCareerEvent } from '@/lib/memory-engine';
+import { adminDb } from '@/lib/firebase-admin';
 
 export async function prepareForInterview(input: InterviewPrepInput & { userId: string }): Promise<InterviewPrepOutput> {
   const { userId, ...flowInput } = input;
 
-  const quota = await checkAndIncrementQuota(userId, 'interviewPreps');
+  const quota = await spendCredits(userId, 'interviewPrep');
   if (!quota.allowed) {
-    throw new Error(`QUOTA_EXCEEDED: You have used all ${quota.limit} free interview preparatory generations for this month. Please upgrade to Pro for more.`);
+    throw new Error(`QUOTA_EXCEEDED: You need ${quota.required} credits for this action. You have ${quota.remaining} credits. Please upgrade or earn more credits.`);
   }
 
-  return prepareForInterviewFlow(flowInput);
+  const result = await prepareForInterviewFlow(flowInput);
+
+  if (flowInput.jobId) {
+    await logCareerEvent(userId, 'interview_prep_run', { jobId: flowInput.jobId });
+    
+    // Optimistically update the GPS route step
+    const jobRef = adminDb.collection('users').doc(userId).collection('jobs').doc(flowInput.jobId);
+    const jobDoc = await jobRef.get();
+    if (jobDoc.exists) {
+      const jobData = jobDoc.data();
+      if (jobData?.computedRoute?.steps) {
+        const updatedSteps = jobData.computedRoute.steps.map((step: any) => 
+          step.actionType === 'mock_interview' ? { ...step, isCompleted: true } : step
+        );
+        await jobRef.update({ 'computedRoute.steps': updatedSteps, updatedAt: new Date() });
+      }
+    }
+  }
+
+  return result;
 }
 
 const prepareForInterviewPrompt = ai.definePrompt({
   name: 'prepareForInterviewPrompt',
   input: { schema: InterviewPrepInputSchema },
   output: { schema: InterviewPrepOutputSchema },
-  model: 'gemini-1.5-flash-latest',
+  model: 'googleai/gemini-2.5-flash',
   prompt: `You are an AI career coach specializing in interview preparation.
 
 Your task is to generate likely interview questions (behavioral, technical, and role-fit) based on the provided job description and the user's profile. Additionally, provide concise, actionable guidance for answering these types of questions.

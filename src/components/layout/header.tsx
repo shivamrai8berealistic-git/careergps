@@ -8,15 +8,16 @@ import { Logo } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "#features", label: "Features" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#features", label: "Features" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/tools/resume-rewrite", label: "Free Tools" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 max-w-screen-2xl items-center">
+      <div className="container flex h-16 max-w-screen-2xl items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Rocket className="h-6 w-6 text-primary" />
@@ -29,7 +30,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                className="relative transition-colors hover:text-foreground text-foreground/60 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
               >
                 {link.label}
               </Link>
@@ -89,7 +90,7 @@ export function Header() {
               Login
             </Link>
             <Link href="/signup">
-              <Button>Sign Up</Button>
+              <Button className="bg-gradient-to-r from-primary to-violet-600 hover:opacity-90 shadow-md">Sign Up</Button>
             </Link>
           </nav>
         </div>

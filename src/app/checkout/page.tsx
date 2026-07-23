@@ -1,22 +1,39 @@
 'use client';
 
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useUser } from "@/firebase";
 import { useProfile } from "@/hooks/useJobs";
-import { razorpay } from "@/lib/razorpay";
 import { RazorpayCheckout } from "@/components/razorpay-checkout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, ShieldCheck, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
+import { SITE_CONFIG } from "@/lib/config";
+
 function CheckoutContent() {
   const searchParams = useSearchParams();
-  const planName = searchParams?.get('plan') || 'Pro';
-  const { user } = useUser();
+  const router = useRouter();
+  const planKey = searchParams?.get('plan') || '1m';
+  const { user, isUserLoading } = useUser();
   const { profile, isLoading: isProfileLoading } = useProfile();
 
-  if (isProfileLoading || !user) {
+  // Auth guard: redirect to login if not authenticated
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      router.replace("/login");
+    }
+  }, [user, isUserLoading, router]);
+
+  const planMap: Record<string, any> = {
+    '1m': SITE_CONFIG.plans.monthly,
+    '3m': SITE_CONFIG.plans.quarterly,
+    '6m': SITE_CONFIG.plans.halfYearly,
+  };
+
+  const selectedPlan = planMap[planKey] || SITE_CONFIG.plans.monthly;
+
+  if (isUserLoading || isProfileLoading || !user) {
     return (
       <div className="flex h-64 items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -30,7 +47,7 @@ function CheckoutContent() {
         <div className="bg-primary/5 p-6 border-b border-primary/10 flex items-center justify-between">
           <div>
             <Badge className="bg-primary/10 text-primary border-primary/20 mb-2">Checkout</Badge>
-            <h1 className="text-2xl font-bold font-headline">Upgrade to {planName}</h1>
+            <h1 className="text-2xl font-bold font-headline">Upgrade to {selectedPlan.name}</h1>
           </div>
           <div className="h-12 w-12 bg-white rounded-xl shadow-sm border border-primary/10 flex items-center justify-center">
             <Zap className="h-6 w-6 text-primary fill-current" />
@@ -40,26 +57,28 @@ function CheckoutContent() {
         <CardContent className="pt-8 space-y-6">
           <div className="space-y-4">
             <div className="flex justify-between items-center text-lg">
-              <span className="text-muted-foreground">Monthly Plan</span>
-              <span className="font-bold">₹299</span>
+              <span className="text-muted-foreground">{selectedPlan.duration} Month Access</span>
+              <span className="font-bold">₹{selectedPlan.price}</span>
             </div>
+            {selectedPlan.savings && (
+                <div className="flex justify-between items-center text-sm">
+                <span className="text-muted-foreground">Limited Time Discount</span>
+                <span className="text-green-600 font-bold">Save {selectedPlan.savings}</span>
+                </div>
+            )}
             <div className="flex justify-between items-center text-sm">
-              <span className="text-muted-foreground">Platform Fee</span>
-              <span className="text-green-600 font-medium">Included</span>
+              <span className="text-muted-foreground">GST (18%)</span>
+              <span className="text-muted-foreground italic">Included</span>
             </div>
             <div className="border-t pt-4 flex justify-between items-center text-xl font-bold">
               <span>Total Amount</span>
-              <span className="text-primary">₹299</span>
+              <span className="text-primary">₹{selectedPlan.price}</span>
             </div>
           </div>
 
           <div className="bg-slate-50 p-4 rounded-lg border text-sm space-y-2">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Billing Name:</span>
-              <span className="font-medium">{profile?.fullName || user.displayName || 'Friend'}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Billing Email:</span>
+              <span className="text-muted-foreground">Account:</span>
               <span className="font-medium truncate max-w-[180px]">{user.email}</span>
             </div>
           </div>
@@ -69,6 +88,9 @@ function CheckoutContent() {
             userEmail={user.email || ''}
             userName={profile?.fullName || user.displayName || ''}
             userPhone={profile?.phone || ''}
+            amount={selectedPlan.price}
+            planId={selectedPlan.id}
+            planName={selectedPlan.name}
           />
 
           <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground pt-4">

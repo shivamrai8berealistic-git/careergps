@@ -33,7 +33,7 @@ export default function SupportPage() {
     },
     {
       q: "Is my resume data secure?",
-      a: "Yes. We use industry-standard encryption and only share data with Gemini AI for the purpose of generation."
+      a: "Yes. We use industry-standard encryption and only process data using secure third-party AI systems for the sole purpose of providing personalized career insights. Your data is never sold."
     }
   ];
 

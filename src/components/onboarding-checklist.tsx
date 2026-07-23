@@ -37,7 +37,7 @@ export function OnboardingChecklist({ steps }: OnboardingChecklistProps) {
           </span>
         </div>
         <CardDescription className="text-lg">
-          Complete these steps to unlock the full power of the AI Job Copilot.
+          Complete these steps to unlock the full power of your Smart Career Copilot.
         </CardDescription>
         <Progress value={progress} className="h-2 mt-4" />
       </CardHeader>

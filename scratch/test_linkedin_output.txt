@@ -1,0 +1,12 @@
+﻿Testing transformed LinkedIn URL: https://www.linkedin.com/jobs/view/4398339581
+[scrapeJobFromUrl] Successfully retrieved content. Length: 185789
+SUCCESS:
+{
+  "title": "Sales Coordinator",
+  "company": "Mahindra Holidays & Resorts India Limited",
+  "location": "Delhi, India",
+  "description": "The Sales Coordinator will play a key role in supporting the sales team, ensuring smooth coordination of leads, offers, and customer interactions. This role is critical to driving efficiency, maintaining accurate records, and enabling the sales team to focus on customer acquisition and retention.Location: Delhi, Chandigarh & RajasthanKey Responsibilities: Coordinate and schedule sales meetings, interviews, and client interactions. Track offers, follow-ups, and maintain updated sales records. Support the sales team with documentation, induction sheets, and reporting. Liaise with internal stakeholders (HR, Finance, Operations) to ensure smooth workflow. Assist in grievance shortlisting, candidate coordination, and interview scheduling. Provide timely updates on pending offers, profiles, and recruitment drives.Qualifications: BachelorΓÇÖs degree in Business Administration, Commerce, or related discipline. 1ΓÇô3 years of experience in sales coordination, business support, or operations. Strong organizational and communication skills. Proficiency in MS Office (Excel, PowerPoint, Word). Ability to multitask and manage priorities in a fast-paced environment.Why Join Us?: Be part of a market leader in leisure & hospitality. Work closely with sales leadership and contribute to business growth. Gain exposure to end-to-end sales operations in a dynamic industry. Opportunity to grow within a large, expanding organization",
+  "applyUrl": "https://www.linkedin.com/jobs/view/4398339581",
+  "employmentType": "Full-time",
+  "sourceUrl": "https://www.linkedin.com/jobs/view/4398339581"
+}

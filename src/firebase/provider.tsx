@@ -2,7 +2,7 @@
 
 import React, { DependencyList, createContext, useContext, ReactNode, useMemo, useState, useEffect } from 'react';
 import { FirebaseApp } from 'firebase/app';
-import { Firestore } from 'firebase/firestore';
+import { Firestore, doc, setDoc } from 'firebase/firestore';
 import { FirebaseStorage } from 'firebase/storage';
 import { Auth, User, onAuthStateChanged } from 'firebase/auth';
 import { FirebaseErrorListener } from '@/components/FirebaseErrorListener'
@@ -84,7 +84,22 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
     const unsubscribe = onAuthStateChanged(
       auth,
       (firebaseUser) => { // Auth state determined
+        console.log("[Auth State] onAuthStateChanged fired. User:", firebaseUser ? firebaseUser.uid : "null");
         setUserAuthState({ user: firebaseUser, isUserLoading: false, userError: null });
+        
+        // Globally ensure user document exists for any authenticated session
+        if (firebaseUser && firestore) {
+          const userRef = doc(firestore, 'users', firebaseUser.uid);
+          setDoc(userRef, {
+            email: firebaseUser.email,
+            name: firebaseUser.displayName || '',
+            updatedAt: new Date().toISOString(),
+          }, { merge: true }).then(() => {
+            console.log("[Auth State] Firestore user document synced safely.");
+          }).catch((err) => {
+            console.error("FirebaseProvider: Failed to sync user document:", err);
+          });
+        }
       },
       (error) => { // Auth listener error
         console.error("FirebaseProvider: onAuthStateChanged error:", error);
@@ -92,7 +107,7 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
       }
     );
     return () => unsubscribe(); // Cleanup
-  }, [auth]); // Depends on the auth instance
+  }, [auth, firestore]); // Depends on the auth and firestore instances
 
   // Memoize the context value
   const contextValue = useMemo((): FirebaseContextState => {

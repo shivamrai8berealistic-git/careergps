@@ -2,7 +2,7 @@ import type { ExtensionMessage } from './shared/types';
 
 // This should point to your web app's domain.
 // For development, it's localhost. For production, it would be your deployed URL.
-const WEB_APP_URL = 'http://localhost:9002';
+const WEB_APP_URL = 'http://localhost:3000';
 
 chrome.runtime.onMessage.addListener(
   (message: ExtensionMessage, sender, sendResponse) => {

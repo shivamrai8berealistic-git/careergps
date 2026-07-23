@@ -10,6 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
+
 const ResumeExperienceEntrySchema = z.object({
   title: z.string().describe('Job title or role.'),
   company: z.string().describe('Company name.'),
@@ -66,14 +67,14 @@ const OptimizeResumeForJobOutputSchema = z.object({
 });
 export type OptimizeResumeForJobOutput = z.infer<typeof OptimizeResumeForJobOutputSchema>;
 
-import { checkAndIncrementQuota } from '@/lib/quota';
+import { spendCredits } from '@/lib/credit-ledger';
 
 export async function optimizeResumeForJob(input: OptimizeResumeForJobInput & { userId: string }): Promise<OptimizeResumeForJobOutput> {
   const { userId, ...flowInput } = input;
 
-  const quota = await checkAndIncrementQuota(userId, 'resumeOptimizations');
+  const quota = await spendCredits(userId, 'resumeRewrite');
   if (!quota.allowed) {
-    throw new Error(`QUOTA_EXCEEDED: You have used all ${quota.limit} free resume optimizations for this month. Please upgrade to Pro for more.`);
+    throw new Error(`QUOTA_EXCEEDED: You need ${quota.required} credits for this action. You have ${quota.remaining} credits. Please upgrade or earn more credits.`);
   }
 
   return optimizeResumeForJobFlow(flowInput);
@@ -83,7 +84,7 @@ const prompt = ai.definePrompt({
   name: 'optimizeResumeForJobPrompt',
   input: { schema: OptimizeResumeForJobInputSchema },
   output: { schema: OptimizeResumeForJobOutputSchema },
-  model: 'gemini-1.5-flash-latest',
+  model: 'googleai/gemini-2.5-flash',
   prompt: `You are an expert career coach and resume writer. Your task is to analyze a job description and a candidate's resume, then provide actionable suggestions to optimize the resume for that specific job, focusing on Applicant Tracking System (ATS) compatibility and relevance.
 
 Here is the job description:

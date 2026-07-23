@@ -1,0 +1,173 @@
+﻿ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  JOB IMPORT BY URL ΓÇö END-TO-END TEST SUITE
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+Testing 10 URLs...
+
+
+[============================================================]
+[TEST 1/10] www.linkedin.com
+URL: https://www.linkedin.com/jobs/collections/easy-apply/?currentJobId=4398339581&discover=true...
+Expected: PASS
+[scrapeJobFromUrl] Processing URL from: www.linkedin.com
+[fetchLinkedIn] Fetching Guest API: https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/4398339581
+[extractFromLinkedInHtml] Found: "Sales Coordinator" at "Mahindra Holidays & Resorts India Limited"
+[scrapeJobFromUrl] Γ£à Success: "Sales Coordinator" at "Mahindra Holidays & Resorts India Limited"
+Γ£à PASS (1430ms)
+   Title: "Sales Coordinator"
+   Company: "Mahindra Holidays & Resorts India Limited"
+   Location: "Delhi, India"
+   Type: "Full-time"
+   Description: 1448 chars
+
+[============================================================]
+[TEST 2/10] www.linkedin.com
+URL: https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4361011095...
+Expected: PASS
+[scrapeJobFromUrl] Processing URL from: www.linkedin.com
+[fetchLinkedIn] Fetching Guest API: https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/4361011095
+[extractFromLinkedInHtml] Found: "Group Head - Ecommerce" at "WPP Media"
+[scrapeJobFromUrl] Γ£à Success: "Group Head - Ecommerce" at "WPP Media"
+Γ£à PASS (664ms)
+   Title: "Group Head - Ecommerce"
+   Company: "WPP Media"
+   Location: "Gurgaon, Haryana, India"
+   Type: "Full-time"
+   Description: 5852 chars
+
+[============================================================]
+[TEST 3/10] www.naukri.com
+URL: https://www.naukri.com/job-listings-sales-executive-zipaworld-noida-2-to-5-years-240426501793?src=jo...
+Expected: PASS
+[scrapeJobFromUrl] Processing URL from: www.naukri.com
+[fetchGeneric] Attempting direct fetch: https://www.naukri.com/job-listings-sales-executive-zipaworld-noida-2-to-5-years-240426501793?src=jobsearchDesk&sid=17772114807257262&xp=2&px=1&nignbevent_src=jobsearchDeskGNB
+[fetchGeneric] Trying Jina Reader: https://www.naukri.com/job-listings-sales-executive-zipaworld-noida-2-to-5-years-240426501793?src=jobsearchDesk&sid=17772114807257262&xp=2&px=1&nignbevent_src=jobsearchDeskGNB
+[fetchGeneric] Jina success. Length: 23978
+[fetchGeneric] Sending jina content to AI for extraction...
+[scrapeJobFromUrl] Γ£à Success: "Sales Executive" at "Zipaworld Innovation"
+Γ£à PASS (25201ms)
+   Title: "Sales Executive"
+   Company: "Zipaworld Innovation"
+   Location: "Noida"
+   Type: "Full-time"
+   Description: 948 chars
+
+[============================================================]
+[TEST 4/10] www.naukri.com
+URL: https://www.naukri.com/job-listings-sales-executive-m-s-vinit-enterprises-jalandhar-0-to-5-years-200...
+Expected: PASS
+[scrapeJobFromUrl] Processing URL from: www.naukri.com
+[fetchGeneric] Attempting direct fetch: https://www.naukri.com/job-listings-sales-executive-m-s-vinit-enterprises-jalandhar-0-to-5-years-200426016741?src=simjobsjd_rt
+[fetchGeneric] Trying Jina Reader: https://www.naukri.com/job-listings-sales-executive-m-s-vinit-enterprises-jalandhar-0-to-5-years-200426016741?src=simjobsjd_rt
+[fetchGeneric] Jina success. Length: 20060
+[fetchGeneric] Sending jina content to AI for extraction...
+[scrapeJobFromUrl] Γ£à Success: "Sales Executive" at "M/S Vinit Enterprises"
+Γ£à PASS (22732ms)
+   Title: "Sales Executive"
+   Company: "M/S Vinit Enterprises"
+   Location: "Jalandhar (Hybrid)"
+   Type: "Full Time"
+   Description: 1124 chars
+
+[============================================================]
+[TEST 5/10] www.foundit.in
+URL: https://www.foundit.in/job/senior-consultant-sap-sd-argano-software-delhi-36070703...
+Expected: PASS
+[scrapeJobFromUrl] Processing URL from: www.foundit.in
+[fetchFoundIt] Direct fetch: https://www.foundit.in/job/senior-consultant-sap-sd-argano-software-delhi-36070703
+[extractFromJsonLd] Found JobPosting: "Senior Consultant - SAP SD" at "Argano Software"
+[scrapeJobFromUrl] Γ£à Success: "Senior Consultant - SAP SD" at "Argano Software"
+Γ£à PASS (463ms)
+   Title: "Senior Consultant - SAP SD"
+   Company: "Argano Software"
+   Location: "Delhi, Delhi, India, Delhi, IN"
+   Type: "Full time"
+   Description: 1673 chars
+
+[============================================================]
+[TEST 6/10] www.foundit.in
+URL: https://www.foundit.in/job/visa-consultant-fresher-zigsaw-ahmedabad-51130861...
+Expected: PASS
+[scrapeJobFromUrl] Processing URL from: www.foundit.in
+[fetchFoundIt] Direct fetch: https://www.foundit.in/job/visa-consultant-fresher-zigsaw-ahmedabad-51130861
+[extractFromJsonLd] Found JobPosting: "Visa Consultant ( Fresher )" at "Zigsaw"
+[scrapeJobFromUrl] Γ£à Success: "Visa Consultant ( Fresher )" at "Zigsaw"
+Γ£à PASS (587ms)
+   Title: "Visa Consultant ( Fresher )"
+   Company: "Zigsaw"
+   Location: "Ahmedabad, Gujarat, India, Gujarat, IN"
+   Type: "Full time"
+   Description: 834 chars
+
+[============================================================]
+[TEST 7/10] www.glassdoor.co.in
+URL: https://www.glassdoor.co.in/job-listing/market-research-digitallancers-JV_IC2921225_KO0,15_KE16,30.h...
+Expected: FAIL (blocked site)
+[scrapeJobFromUrl] Processing URL from: www.glassdoor.co.in
+[fetchGeneric] Attempting direct fetch: https://www.glassdoor.co.in/job-listing/market-research-digitallancers-JV_IC2921225_KO0,15_KE16,30.htm?jl=1008973314282&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[fetchGeneric] Trying Jina Reader: https://www.glassdoor.co.in/job-listing/market-research-digitallancers-JV_IC2921225_KO0,15_KE16,30.htm?jl=1008973314282&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+ΓÜá∩╕Å  EXPECTED FAIL (1277ms): We couldn't access this job page. The site (www.glassdoor.co.in) is blocking automated access.
+
+Try one of these instead
+node : [fetchGeneric] Jina also failed: Site returned a security challenge page
+At line:1 char:1
++ node node_modules/tsx/dist/cli.mjs live_test_all.ts 2>&1 | Out-File - ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([fetchGeneric] ... challenge page:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[============================================================]
+[TEST 8/10] www.glassdoor.co.in
+URL: https://www.glassdoor.co.in/Job/new-delhi-jobs-SRCH_IL.0,9_IC2891681.htm...
+Expected: FAIL (blocked site)
+[scrapeJobFromUrl] Processing URL from: www.glassdoor.co.in
+ΓÜá∩╕Å  EXPECTED FAIL (0ms): This Glassdoor URL appears to be a search page. Please navigate to a specific job listing and paste that URL instead.
+
+[============================================================]
+[TEST 9/10] in.indeed.com
+URL: https://in.indeed.com/viewjob?jk=f05419a8d725949c&utm_campaign=google_jobs_apply&utm_source=google_j...
+Expected: FAIL (blocked site)
+[scrapeJobFromUrl] Processing URL from: in.indeed.com
+[fetchGeneric] Attempting direct fetch: https://in.indeed.com/viewjob?jk=f05419a8d725949c&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[fetchGeneric] Trying Jina Reader: https://in.indeed.com/viewjob?jk=f05419a8d725949c&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[fetchGeneric] Jina also failed: Site returned a security challenge page
+ΓÜá∩╕Å  EXPECTED FAIL (7730ms): We couldn't access this job page. The site (in.indeed.com) is blocking automated access.
+
+Try one of these instead:
+ΓÇó Co
+
+[============================================================]
+[TEST 10/10] in.indeed.com
+URL: https://in.indeed.com/viewjob?jk=2ac593637f7c4eed&utm_campaign=google_jobs_apply&utm_source=google_j...
+Expected: FAIL (blocked site)
+[scrapeJobFromUrl] Processing URL from: in.indeed.com
+[fetchGeneric] Attempting direct fetch: https://in.indeed.com/viewjob?jk=2ac593637f7c4eed&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[fetchGeneric] Trying Jina Reader: https://in.indeed.com/viewjob?jk=2ac593637f7c4eed&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[fetchGeneric] Jina also failed: Site returned a security challenge page
+ΓÜá∩╕Å  EXPECTED FAIL (5399ms): We couldn't access this job page. The site (in.indeed.com) is blocking automated access.
+
+Try one of these instead:
+ΓÇó Co
+
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  TEST RESULTS SUMMARY
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+
+PASSED:         6/10
+EXPECTED FAIL:  4/10
+UNEXPECTED FAIL: 0/10
+
+Γ£à [linkedin.com             ] "Sales Coordinator" at "Mahindra Holidays & Resorts India Limited" (1430ms)
+Γ£à [linkedin.com             ] "Group Head - Ecommerce" at "WPP Media" (664ms)
+Γ£à [naukri.com               ] "Sales Executive" at "Zipaworld Innovation" (25201ms)
+Γ£à [naukri.com               ] "Sales Executive" at "M/S Vinit Enterprises" (22732ms)
+Γ£à [foundit.in               ] "Senior Consultant - SAP SD" at "Argano Software" (463ms)
+Γ£à [foundit.in               ] "Visa Consultant ( Fresher )" at "Zigsaw" (587ms)
+ΓÜá∩╕Å [glassdoor.co.in          ] We couldn't access this job page. The site (www.glassdoor.co.in) is blocking aut (1277ms)
+ΓÜá∩╕Å [glassdoor.co.in          ] This Glassdoor URL appears to be a search page. Please navigate to a specific jo (0ms)
+ΓÜá∩╕Å [in.indeed.com            ] We couldn't access this job page. The site (in.indeed.com) is blocking automated (7730ms)
+ΓÜá∩╕Å [in.indeed.com            ] We couldn't access this job page. The site (in.indeed.com) is blocking automated (5399ms)
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+Γ£à All tests passed (or failed as expected for blocked sites).

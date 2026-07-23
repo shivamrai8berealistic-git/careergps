@@ -1,0 +1,189 @@
+﻿=== STARTING LIVE TEST OF MULTIPLE JOB URLS ===
+
+[TEST 1/10] URL: https://www.linkedin.com/jobs/collections/easy-apply/?currentJobId=4398339581&discover=true
+[scrapeJobFromUrl] Normalized LinkedIn URL to: https://www.linkedin.com/jobs/view/4398339581
+[scrapeJobFromUrl] Successfully retrieved content. Length: 185819
+SUCCESS:
+{
+  "title": "Sales Coordinator",
+  "company": "Mahindra Holidays & Resorts India Limited",
+  "location": "Delhi, India",
+  "employmentType": "Full-time",
+  "descPreview": "The Sales Coordinator will play a key role in supporting the sales team, ensuring smooth coordinatio..."
+}
+-------------------------------------------
+
+[TEST 2/10] URL: https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4361011095
+[scrapeJobFromUrl] Normalized LinkedIn URL to: https://www.linkedin.com/jobs/view/4361011095
+[scrapeJobFromUrl] Successfully retrieved content. Length: 215948
+SUCCESS:
+{
+  "title": "Group Head - Ecommerce",
+  "company": "WPP Media",
+  "location": "Gurgaon, Haryana, India",
+  "employmentType": "Full-time",
+  "descPreview": "About WPP MediaWPP is the trusted growth partner for the worldΓÇÖs leading brands. With exceptional ta..."
+}
+-------------------------------------------
+
+[TEST 3/10] URL: https://www.naukri.com/job-listings-sales-executive-zipaworld-noida-2-to-5-years-240426501793?src=jobsearchDesk&sid=17772114807257262&xp=2&px=1&nignbevent_src=jobsearchDeskGNB
+[scrapeJobFromUrl] Successfully retrieved content. Length: 133664
+SUCCESS:
+{
+  "title": "Sales Executive",
+  "company": "Zipaworld Innovation",
+  "location": "Noida",
+  "employmentType": "Full-time",
+  "descPreview": "We are looking for a highly motivated and results-driven Sales Executive to join our team at Zipawor..."
+}
+-------------------------------------------
+
+[TEST 4/10] URL: https://www.naukri.com/job-listings-sales-executive-m-s-vinit-enterprises-jalandhar-0-to-5-years-200426016741?src=simjobsjd_rt
+[scrapeJobFromUrl] Successfully retrieved content. Length: 119138
+SUCCESS:
+{
+  "title": "Field Sales Executive",
+  "company": "M/S Vinit Enterprises",
+  "location": "Jalandhar (Jawahar Nagar), Hybrid (1 week in office)",
+  "employmentType": "Full-time",
+  "descPreview": "Role & responsibilities: We are looking for a dynamic and results-driven Sales Executive to join our..."
+}
+-------------------------------------------
+
+[TEST 5/10] URL: https://www.foundit.in/job/senior-consultant-sap-sd-argano-software-delhi-36070703
+[scrapeJobFromUrl] Successfully retrieved content. Length: 144067
+SUCCESS:
+{
+  "title": "Senior Consultant - SAP SD",
+  "company": "Argano Software",
+  "location": "Delhi, Hyderabad",
+  "employmentType": "Full-time",
+  "descPreview": "Facilitate the implementation and support of SAP SD Perform detailed analysis of complex business pr..."
+}
+-------------------------------------------
+
+[TEST 6/10] URL: https://www.foundit.in/job/visa-consultant-fresher-zigsaw-ahmedabad-51130861
+[scrapeJobFromUrl] Successfully retrieved content. Length: 107330
+SUCCESS:
+{
+  "title": "Visa Consultant ( Fresher )",
+  "company": "Zigsaw",
+  "location": "Ahmedabad, India",
+  "employmentType": "Full time",
+  "descPreview": "Visa Consultant. Locations: Iskcon Cross Rd, Sanidhya, Ahmedabad, Gujarat 380015 and Sarabhai Main R..."
+}
+-------------------------------------------
+
+[TEST 7/10] URL: https://www.glassdoor.co.in/job-listing/market-research-digitallancers-JV_IC2921225_KO0,15_KE16,30.htm?jl=1008973314282&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+FAILED: The job board (www.glassdoor.co.in) actively blocks automated imports. Please use our Browser Extension or copy-paste the job description text instead.
+-------------------------------------------
+
+[TEST 8/10] URL: https://www.glassdoor.co.in/Job/new-delhi-jobs-SRCH_IL.0,9_IC2891681.htm
+[scrapeJobFromUrl] Successfully retrieved content. Length: 34131
+SUCCESS:
+{
+  "title": "Security Check",
+  "company": "Glassdoor",
+  "descPreview": "Glassdoor has been built on the contributions of real employees and job seekers. We use advanced sec..."
+}
+-------------------------------------------
+
+[TEST 9/10] URL: https://in.indeed.com/viewjob?jk=f05419a8d725949c&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Successfully retrieved content. Length: 9078
+FAILED: RESOURCE_EXHAUSTED: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 11.684025952s.
+-------------------------------------------
+
+node : GenkitError: RESOURCE_EXHAUSTED: Error fetching from 
+https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [429 Too Many Requests] You 
+exceeded your current quota, please check your plan and billing details. For more information on this error, head to: 
+https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+At line:1 char:1
++ node node_modules/tsx/dist/cli.mjs -r tsconfig-paths/register live_te ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (GenkitError: RE...ev/rate-limit. :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: 
+gemini-2.5-flash
+Please retry in 11.684025952s.
+    at makeRequest (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\google-genai\src\googleai\client.ts:375:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async generateContent (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\google-genai\src\googleai\client.ts:94:20)
+    at async callGemini (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\google-genai\src\googleai\gemini.ts:763:22)
+    at async <anonymous> (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\google-genai\src\googleai\gemini.ts:826:11)
+    at async <anonymous> (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\core\src\action.ts:391:26)
+    at async <anonymous> (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\core\src\tracing\instrumentation.ts:142:24)
+    at async runInNewSpan (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\core\src\tracing\instrumentation.ts:110:10)
+    at async actionFn.actionFn.run (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\core\src\action.ts:340:18)
+    at async dispatch (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\core\src\action.ts:263:24) {
+  source: undefined,
+  status: 'RESOURCE_EXHAUSTED',
+  detail: undefined,
+  code: 429,
+  originalMessage: 'Error fetching from 
+https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [429 Too Many Requests] You 
+exceeded your current quota, please check your plan and billing details. For more information on this error, head to: 
+https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+\n' +
+    '* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, 
+model: gemini-2.5-flash\n' +
+    'Please retry in 11.684025952s.'
+}
+[TEST 10/10] URL: https://in.indeed.com/viewjob?jk=2ac593637f7c4eed&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic
+[scrapeJobFromUrl] Successfully retrieved content. Length: 9078
+GenkitError: RESOURCE_EXHAUSTED: Error fetching from 
+https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [429 Too Many Requests] You 
+exceeded your current quota, please check your plan and billing details. For more information on this error, head to: 
+https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: 
+gemini-2.5-flash
+Please retry in 3.120904203s.
+    at makeRequest (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\google-genai\src\googleai\client.ts:375:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async generateContent (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\google-genai\src\googleai\client.ts:94:20)
+    at async callGemini (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\google-genai\src\googleai\gemini.ts:763:22)
+    at async <anonymous> (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\google-genai\src\googleai\gemini.ts:826:11)
+    at async <anonymous> (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\core\src\action.ts:391:26)
+    at async <anonymous> (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\core\src\tracing\instrumentation.ts:142:24)
+    at async runInNewSpan (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\core\src\tracing\instrumentation.ts:110:10)
+    at async actionFn.actionFn.run (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\core\src\action.ts:340:18)
+    at async dispatch (C:\Users\user\Downloads\Career Pilot AI 
+Project\node_modules\@genkit-ai\core\src\action.ts:263:24) {
+  source: undefined,
+  status: 'RESOURCE_EXHAUSTED',
+  detail: undefined,
+  code: 429,
+  originalMessage: 'Error fetching from 
+https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [429 Too Many Requests] You 
+exceeded your current quota, please check your plan and billing details. For more information on this error, head to: 
+https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+\n' +
+    '* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, 
+model: gemini-2.5-flash\n' +
+    'Please retry in 3.120904203s.'
+}
+FAILED: RESOURCE_EXHAUSTED: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 3.120904203s.
+-------------------------------------------
+
+=== LIVE TEST COMPLETE ===

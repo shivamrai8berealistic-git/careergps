@@ -137,4 +137,7 @@ const Popup = () => {
   );
 };
 
-render(<Popup />, document.getElementById('root'));
+const root = document.getElementById('root');
+if (root) {
+  render(<Popup />, root);
+}

@@ -1,0 +1,1 @@
+(()=>{"use strict";chrome.runtime.onMessage.addListener((o,e,t)=>{if("ANALYZE_JOB"===o.type){console.log("Background script received job to analyze:",o.jobData);const e=JSON.stringify(o.jobData),t=btoa(e),a=`http://localhost:3000/jobs/import?data=${encodeURIComponent(t)}`;chrome.tabs.create({url:a})}return!0}),console.log("CareerPilot AI background script loaded.")})();

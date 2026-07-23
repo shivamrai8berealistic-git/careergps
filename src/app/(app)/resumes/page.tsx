@@ -9,8 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, PlusCircle, Trash2, UploadCloud, Loader2, CheckCircle2 } from "lucide-react";
+import { FileText, PlusCircle, Trash2, UploadCloud, Loader2, CheckCircle2, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { useResumes } from "@/hooks/useJobs";
 import { useStorage, useUser } from "@/firebase";
 import { useRouter } from "next/navigation";
@@ -47,7 +48,7 @@ export default function ResumesPage() {
       const snapshot = await uploadBytes(storageRef, file);
       const downloadUrl = await getDownloadURL(snapshot.ref);
 
-      setUploadProgress("AI Parsing your resume...");
+      setUploadProgress("Analyzing your professional profile...");
       
       // 2. Parse with AI
       // Convert to base64 for Genkit flow
@@ -123,23 +124,31 @@ export default function ResumesPage() {
        <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight font-headline">Resume Management</h1>
-          <p className="text-muted-foreground">Upload and manage your resumes for AI analysis.</p>
+          <p className="text-muted-foreground italic text-sm mb-1 text-primary/80">
+            Your data is processed securely using industry-leading systems to generate personalized insights. We never sell your data.
+          </p>
+          <p className="text-muted-foreground">Upload and manage your resumes for smart career analysis.</p>
         </div>
-        <div className="relative">
-          <input
-            type="file"
-            id="resume-upload"
-            className="hidden"
-            accept=".pdf,.docx"
-            onChange={handleFileUpload}
-            disabled={isUploading}
-          />
-          <Button asChild disabled={isUploading}>
-            <label htmlFor="resume-upload" className="cursor-pointer">
-              {isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <UploadCloud className="mr-2 h-4 w-4" />}
-              {isUploading ? "Uploading..." : "Upload New Resume"}
-            </label>
+        <div className="flex gap-2">
+          <Button variant="outline" asChild>
+            <a href="/resume-builder"><Sparkles className="mr-2 h-4 w-4" /> Create from Scratch</a>
           </Button>
+          <div className="relative">
+            <input
+              type="file"
+              id="resume-upload"
+              className="hidden"
+              accept=".pdf,.docx"
+              onChange={handleFileUpload}
+              disabled={isUploading}
+            />
+            <Button asChild disabled={isUploading}>
+              <label htmlFor="resume-upload" className="cursor-pointer">
+                {isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <UploadCloud className="mr-2 h-4 w-4" />}
+                {isUploading ? "Uploading..." : "Upload Resume"}
+              </label>
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -185,7 +194,7 @@ export default function ResumesPage() {
               <UploadCloud className="w-12 h-12 text-muted-foreground mb-4" />
               <h3 className="text-lg font-semibold">No resumes yet</h3>
               <p className="text-sm text-muted-foreground mb-6 text-center max-w-xs">
-                Upload your first resume to start getting AI-powered job insights and content recommendations.
+                Upload your first resume to start getting smart job insights and content recommendations.
               </p>
               <Button asChild disabled={isUploading}>
                 <label htmlFor="resume-upload" className="cursor-pointer">
@@ -204,7 +213,7 @@ export default function ResumesPage() {
                   <Sparkles className="absolute -top-1 -right-1 h-6 w-6 text-purple-500 animate-pulse" />
                 </div>
                 <div className="text-center">
-                  <h3 className="text-xl font-bold">Processing Resume</h3>
+                  <h3 className="text-xl font-bold">Optimizing Your Data</h3>
                   <p className="text-muted-foreground mt-2">{uploadProgress}</p>
                 </div>
                 <Progress value={uploadProgress.includes('Saving') ? 90 : uploadProgress.includes('Parsing') ? 60 : 30} className="w-full h-2" />

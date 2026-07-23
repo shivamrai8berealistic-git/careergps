@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Career Pilot AI - Memory Ingestion",
+  "version": "1.0.0",
+  "description": "Capture job market data and sync it to your Career Twin.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://*.linkedin.com/*",
+    "https://*.indeed.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Career Pilot AI"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.linkedin.com/jobs/*", "https://*.indeed.com/viewjob*"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["http://localhost:3000/*", "https://careerpilot.ai/*"],
+      "js": ["auth-sync.js"]
+    }
+  ]
+}

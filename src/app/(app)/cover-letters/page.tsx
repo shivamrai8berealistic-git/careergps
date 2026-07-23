@@ -53,6 +53,7 @@ export default function CoverLettersPage() {
       
       const result = await generateCoverLetter({
         userId: user?.uid || '',
+        jobId: selectedJobId,
         userProfile: {
           name: profile.fullName || "",
           email: profile.email || "",

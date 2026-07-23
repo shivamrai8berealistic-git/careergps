@@ -16,7 +16,8 @@ import {
   updateDoc,
   orderBy,
   onSnapshot,
-  QueryConstraint
+  QueryConstraint,
+  limit
 } from 'firebase/firestore';
 
 export type UserPlan = 'free' | 'pro';
@@ -28,7 +29,28 @@ export interface Job {
   company: string;
   location: string;
   description: string;
+  applyUrl?: string;
+  sourceUrl?: string;
+  employmentType?: string;
   status: 'saved' | 'applied' | 'interview' | 'offer' | 'rejected';
+  // Career GPS additions
+  destinationState?: 'analyzing' | 'ready' | 'archived';
+  computedRoute?: {
+    matchProbability: number;
+    salaryDelta?: string;
+    missingSkills: string[];
+    steps: {
+      id: string;
+      title: string;
+      description: string;
+      actionType: 'rewrite_resume' | 'generate_cover_letter' | 'mock_interview' | 'upskill' | 'apply';
+      isCompleted: boolean;
+    }[];
+  };
+  appliedDate?: any;
+  followUpDate?: string;
+  followUpNotes?: string;
+  followUpCompleted?: boolean;
   createdAt: any;
   updatedAt: any;
 }
@@ -40,7 +62,8 @@ export function useJobs() {
   const jobsQuery = useMemoFirebase(() => {
     if (!user) return null;
     const constraints: QueryConstraint[] = [
-      orderBy('createdAt', 'desc')
+      orderBy('createdAt', 'desc'),
+      limit(50)
     ];
     return query(collection(firestore, 'users', user.uid, 'jobs'), ...constraints);
   }, [user, firestore]);
@@ -49,6 +72,13 @@ export function useJobs() {
 
   const addJob = async (jobData: Partial<Job>) => {
     if (!user) throw new Error('User must be logged in to add a job');
+    
+    if (jobData.sourceUrl && jobs) {
+      const isDuplicate = jobs.some(j => j.sourceUrl === jobData.sourceUrl);
+      if (isDuplicate) {
+        throw new Error('You have already saved this job.');
+      }
+    }
     
     return addDoc(collection(firestore, 'users', user.uid, 'jobs'), {
       ...jobData,
@@ -62,8 +92,22 @@ export function useJobs() {
   const updateJobStatus = async (jobId: string, status: Job['status']) => {
     if (!user) throw new Error('User must be logged in to update a job');
     const jobRef = doc(firestore, 'users', user.uid, 'jobs', jobId);
-    return updateDoc(jobRef, {
+    const updateData: any = {
       status,
+      updatedAt: serverTimestamp(),
+    };
+    // Auto-set appliedDate when moving to 'applied' for the first time
+    if (status === 'applied') {
+      updateData.appliedDate = serverTimestamp();
+    }
+    return updateDoc(jobRef, updateData);
+  };
+
+  const updateJobFollowUp = async (jobId: string, followUpData: { followUpDate?: string; followUpNotes?: string; followUpCompleted?: boolean }) => {
+    if (!user) throw new Error('User must be logged in');
+    const jobRef = doc(firestore, 'users', user.uid, 'jobs', jobId);
+    return updateDoc(jobRef, {
+      ...followUpData,
       updatedAt: serverTimestamp(),
     });
   };
@@ -93,6 +137,7 @@ export function useJobs() {
     error,
     addJob,
     updateJobStatus,
+    updateJobFollowUp,
     getJob,
     saveAnalysis,
   };
@@ -309,7 +354,7 @@ export function useUserUsage() {
 
   const usageRef = useMemoFirebase(() => {
     if (!user) return null;
-    return doc(firestore, 'users', user.uid, 'usage', 'current');
+    return doc(firestore, 'users', user.uid, 'wallet', 'main');
   }, [user, firestore]);
 
   const [usage, setUsage] = useState<any>(null);
@@ -330,7 +375,7 @@ export function useUserUsage() {
     // Fetch usage doc
     let unsubscribeUsage = () => {};
     if (usageRef) {
-      unsubscribeUsage = onSnapshot(usageRef as any, (docSnap) => {
+      unsubscribeUsage = onSnapshot(usageRef as any, (docSnap: any) => {
         if (docSnap.exists()) {
           setUsage(docSnap.data());
         }

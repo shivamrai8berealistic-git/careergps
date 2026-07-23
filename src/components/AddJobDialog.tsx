@@ -17,8 +17,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PlusCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+interface AddJobDialogProps {
+  className?: string;
+}
 
-export function AddJobDialog() {
+export function AddJobDialog({ className }: AddJobDialogProps = {}) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { addJob } = useJobs();
@@ -51,16 +54,16 @@ export function AddJobDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <PlusCircle className="mr-2 h-4 w-4" /> Add Job
+        <Button variant="outline" className={className}>
+          <PlusCircle className="mr-2 h-4 w-4" /> Set Destination
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Add New Job</DialogTitle>
+            <DialogTitle>Set New Destination</DialogTitle>
             <DialogDescription>
-              Enter the details of the job you want to track. You can run AI analysis once it's saved.
+              Enter the details of the job role you want to navigate towards.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -94,9 +97,8 @@ export function AddJobDialog() {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" disabled={isLoading}>
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Save Job
+            <Button type="submit" disabled={isLoading} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+              {isLoading ? "Setting Destination..." : "Set Destination"}
             </Button>
           </DialogFooter>
         </form>

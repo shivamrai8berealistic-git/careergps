@@ -1,15 +1,15 @@
-import { adminDb } from './firebase-admin';
+import { adminDb, admin } from './firebase-admin';
 import { format } from 'date-fns';
-import { FieldValue } from 'firebase-admin/firestore';
-import { QUOTA_LIMITS, UserPlan, QuotaFeature } from './quota-limits';
+import { CREDIT_COSTS, AIAction, UserPlan, INITIAL_FREE_CREDITS, MONTHLY_FREE_CREDITS, PRO_MONTHLY_CREDITS } from './quota-limits';
 
-export { QUOTA_LIMITS };
-export type { UserPlan, QuotaFeature };
+export { CREDIT_COSTS };
+export type { UserPlan, AIAction };
 
-export async function checkAndIncrementQuota(userId: string, feature: QuotaFeature) {
+export async function deductCredits(userId: string, action: AIAction) {
   const currentMonth = format(new Date(), 'yyyy-MM');
   const userRef = adminDb.collection('users').doc(userId);
   const usageRef = userRef.collection('usage').doc('current');
+  const cost = CREDIT_COSTS[action] || 0;
 
   // Use a transaction to ensure atomicity
   return await adminDb.runTransaction(async (transaction) => {
@@ -24,50 +24,69 @@ export async function checkAndIncrementQuota(userId: string, feature: QuotaFeatu
       transaction.set(userRef, {
         plan: 'free',
         subscriptionStatus: 'none',
-        createdAt: FieldValue.serverTimestamp(),
-        updatedAt: FieldValue.serverTimestamp()
-      });
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
     }
 
-    const limits = QUOTA_LIMITS[plan];
-    const limit = limits[feature];
+    // Lazy initialization of usage doc
+    if (!usageDoc.exists) {
+       // First time ever using the app
+       const initialCredits = plan === 'pro' ? PRO_MONTHLY_CREDITS : INITIAL_FREE_CREDITS;
+       
+       if (initialCredits < cost) {
+          return { allowed: false, plan, required: cost, remaining: initialCredits };
+       }
 
-    if (!usageDoc.exists || usageDoc.data()?.month !== currentMonth) {
-      // LAZY RESET: New month or first-time usage
-      const initialUsage = {
-        month: currentMonth,
-        jobAnalyses: 0,
-        resumeOptimizations: 0,
-        coverLetters: 0,
-        interviewPreps: 0,
-        assistantMessages: 0,
-        updatedAt: FieldValue.serverTimestamp()
-      };
-      
-      // Increment the current feature
-      initialUsage[feature] = 1;
-      
-      transaction.set(usageRef, initialUsage);
-      return { allowed: true, plan, remaining: limit - 1 };
+       transaction.set(usageRef, {
+         month: currentMonth,
+         creditsRemaining: initialCredits - cost,
+         updatedAt: admin.firestore.FieldValue.serverTimestamp()
+       });
+       
+       return { allowed: true, plan, remaining: initialCredits - cost, cost };
     }
 
     const currentUsage = usageDoc.data()!;
-    const count = currentUsage[feature] || 0;
+    let creditsRemaining = currentUsage.creditsRemaining ?? 0;
 
-    if (count >= limit) {
-      return { allowed: false, plan, limit };
+    // Monthly recharge logic
+    if (currentUsage.month !== currentMonth) {
+       if (plan === 'pro') {
+          creditsRemaining = PRO_MONTHLY_CREDITS;
+       } else {
+          // Carry over previous credits and add monthly bonus
+          creditsRemaining += MONTHLY_FREE_CREDITS;
+       }
+       
+       if (creditsRemaining < cost) {
+          return { allowed: false, plan, required: cost, remaining: creditsRemaining };
+       }
+
+       transaction.set(usageRef, {
+         month: currentMonth,
+         creditsRemaining: creditsRemaining - cost,
+         updatedAt: admin.firestore.FieldValue.serverTimestamp()
+       });
+
+       return { allowed: true, plan, remaining: creditsRemaining - cost, cost };
     }
 
-    // Increment
+    // Normal deduction in the same month
+    if (creditsRemaining < cost) {
+      return { allowed: false, plan, required: cost, remaining: creditsRemaining };
+    }
+
     transaction.update(usageRef, {
-      [feature]: FieldValue.increment(1),
-      updatedAt: FieldValue.serverTimestamp()
+      creditsRemaining: admin.firestore.FieldValue.increment(-cost),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp()
     });
 
     return { 
       allowed: true, 
       plan, 
-      remaining: limit - (count + 1) 
+      remaining: creditsRemaining - cost,
+      cost
     };
   });
 }

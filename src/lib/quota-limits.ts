@@ -1,25 +1,44 @@
 export type UserPlan = 'free' | 'pro';
 
-export type QuotaFeature = 
-  | 'jobAnalyses' 
-  | 'resumeOptimizations' 
-  | 'coverLetters' 
-  | 'interviewPreps' 
-  | 'assistantMessages';
+export type AIAction = 
+  | 'resumeRewrite' 
+  | 'careerStreamMap'
+  | 'voiceInterview'
+  | 'coverLetter'
+  | 'interviewPrep'
+  | 'deepSkillAnalysis'
+  | 'linkedinOptimize'
+  | 'chatMessage'
+  | 'salaryInsights'
+  | 'resumeParse' // 0 credits
+  | 'jobAnalysis'; // 0 credits for basic
 
-export const QUOTA_LIMITS: Record<UserPlan, Record<QuotaFeature, number>> = {
+export const CREDIT_COSTS: Record<AIAction, number> = {
+  resumeRewrite: 5,
+  careerStreamMap: 5,
+  voiceInterview: 4,
+  coverLetter: 3,
+  interviewPrep: 3,
+  deepSkillAnalysis: 2,
+  linkedinOptimize: 2,
+  chatMessage: 1,
+  salaryInsights: 1,
+  resumeParse: 0,
+  jobAnalysis: 0, 
+};
+
+export const INITIAL_FREE_CREDITS = 20;
+export const MONTHLY_FREE_CREDITS = 5;
+export const PRO_MONTHLY_CREDITS = 500;
+
+export const QUOTA_LIMITS = {
   free: {
     jobAnalyses: 5,
-    resumeOptimizations: 2,
-    coverLetters: 3,
-    interviewPreps: 2,
-    assistantMessages: 10,
+    credits: INITIAL_FREE_CREDITS,
   },
   pro: {
-    jobAnalyses: 60,
-    resumeOptimizations: 30,
-    coverLetters: 60,
-    interviewPreps: 30,
-    assistantMessages: 1000, // Effectively unlimited for chat
-  }
+    jobAnalyses: 100,
+    credits: PRO_MONTHLY_CREDITS,
+  },
 };
+

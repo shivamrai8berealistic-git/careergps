@@ -10,7 +10,9 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
+
 const GenerateCoverLetterInputSchema = z.object({
+  jobId: z.string().optional().describe('The ID of the job this cover letter is for.'),
   userProfile: z.object({
     name: z.string().describe('The full name of the applicant.'),
     email: z.string().email().describe('The email address of the applicant.'),
@@ -39,24 +41,45 @@ const GenerateCoverLetterOutputSchema = z.object({
 });
 export type GenerateCoverLetterOutput = z.infer<typeof GenerateCoverLetterOutputSchema>;
 
-import { checkAndIncrementQuota } from '@/lib/quota';
+import { spendCredits } from '@/lib/credit-ledger';
+import { logCareerEvent } from '@/lib/memory-engine';
+import { adminDb } from '@/lib/firebase-admin';
 
 export async function generateCoverLetter(input: GenerateCoverLetterInput & { userId: string }): Promise<GenerateCoverLetterOutput> {
   const { userId, ...flowInput } = input;
 
-  const quota = await checkAndIncrementQuota(userId, 'coverLetters');
+  const quota = await spendCredits(userId, 'coverLetter');
   if (!quota.allowed) {
-    throw new Error(`QUOTA_EXCEEDED: You have used all ${quota.limit} free cover letters for this month. Please upgrade to Pro for more.`);
+    throw new Error(`QUOTA_EXCEEDED: You need ${quota.required} credits for this action. You have ${quota.remaining} credits. Please upgrade or earn more credits.`);
   }
 
-  return generateCoverLetterFlow(flowInput);
+  const result = await generateCoverLetterFlow(flowInput);
+
+  if (flowInput.jobId) {
+    await logCareerEvent(userId, 'cover_letter_generated', { jobId: flowInput.jobId });
+    
+    // Optimistically update the GPS route step
+    const jobRef = adminDb.collection('users').doc(userId).collection('jobs').doc(flowInput.jobId);
+    const jobDoc = await jobRef.get();
+    if (jobDoc.exists) {
+      const jobData = jobDoc.data();
+      if (jobData?.computedRoute?.steps) {
+        const updatedSteps = jobData.computedRoute.steps.map((step: any) => 
+          step.actionType === 'generate_cover_letter' ? { ...step, isCompleted: true } : step
+        );
+        await jobRef.update({ 'computedRoute.steps': updatedSteps, updatedAt: new Date() });
+      }
+    }
+  }
+
+  return result;
 }
 
 const prompt = ai.definePrompt({
   name: 'generateCoverLetterPrompt',
   input: { schema: GenerateCoverLetterInputSchema },
   output: { schema: GenerateCoverLetterOutputSchema },
-  model: 'gemini-1.5-flash-latest',
+  model: 'googleai/gemini-2.5-flash',
   prompt: `You are an expert career coach and cover letter writer. Your task is to generate a tailored cover letter for a job applicant, based on their profile, resume summary, the job description, and a specified tone.
 
 Applicant's Profile:

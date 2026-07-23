@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 export default function InterviewPrepPage() {
   const { jobs } = useJobs();
   const { profile } = useProfile();
+  const { user } = useUser();
   const { interviewPreps, saveInterviewPrep } = useInterviewPreps();
 
   const [selectedJobId, setSelectedJobId] = useState("");
@@ -37,17 +38,17 @@ export default function InterviewPrepPage() {
     const job = jobs?.find(j => j.id === selectedJobId);
     if (!job) return;
 
-    const { user } = useUser();
     setIsGenerating(true);
     try {
       const result = await prepareForInterview({
         userId: user?.uid || '',
+        jobId: selectedJobId,
         jobJson: {
           title: job.title,
           company: job.company,
           location: job.location || "",
           responsibilities: job.description || "",
-          requiredSkills: job.requiredSkills || [],
+          requiredSkills: [],
         },
         userProfile: {
           fullName: profile.fullName,

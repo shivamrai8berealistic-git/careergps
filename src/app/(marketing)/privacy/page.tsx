@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/config";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -24,49 +25,51 @@ export default function PrivacyPolicyPage() {
         <section>
           <h2 className="text-2xl font-bold">2. Data We Collect</h2>
           <p className="text-muted-foreground leading-relaxed">
-            We collect and process the following data to provide our AI career services:
+            We collect and process the following data to provide our intelligent career services:
           </p>
           <ul className="list-disc pl-6 space-y-2 mt-4 text-muted-foreground">
-            <li><strong>Identity Data:</strong> Full name, email address.</li>
-            <li><strong>Professional Data:</strong> Resume content, job experience, skills, and preferences.</li>
-            <li><strong>Usage Data:</strong> Information about how you use our website and AI tools.</li>
-            <li><strong>Payment Data:</strong> Handled securely by Razorpay. We do not store your credit card details.</li>
+            <li><strong>Personal Identity Data:</strong> Full name, email address, and profile picture (if provided via Google).</li>
+            <li><strong>Professional Information:</strong> Uploaded resumes, career history, education details, skills, and target role preferences.</li>
+            <li><strong>Technical Metadata:</strong> IP address, browser type, and device information to ensure security and improve platform performance.</li>
+            <li><strong>Payment Records:</strong> Handled securely via Razorpay. We maintain records of transaction IDs and subscription status, but never store credit/debit card numbers or bank credentials on our servers.</li>
           </ul>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold">3. How We Use Your Data</h2>
+          <h2 className="text-2xl font-bold">3. Logical Data Processing & AI Disclosure</h2>
           <p className="text-muted-foreground leading-relaxed">
-            We use your data primarily to:
+            To deliver personalized insights, CareerPilot AI utilizes advanced computational logic and secure third-party AI-based processing systems.
           </p>
           <ul className="list-disc pl-6 space-y-2 mt-4 text-muted-foreground">
-            <li>Analyze your resume against job descriptions using Google Gemini AI.</li>
-            <li>Generate tailored cover letters and interview prep guides.</li>
-            <li>Manage your job application tracking dashboard.</li>
-            <li>Process your subscription payments via Razorpay.</li>
+            <li><strong>Automated Match Analysis:</strong> Your resume is compared against job descriptions to provide compatibility scoring.</li>
+            <li><strong>Secure Transmission:</strong> Data sent for third-party processing is encrypted and transmitted via secure APIs.</li>
+            <li><strong>No Data Selling:</strong> We do not sell your professional data to third-party recruiters or data brokers. Your information is used solely for your benefit within the platform.</li>
           </ul>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold">4. AI Processing Disclaimer</h2>
-          <p className="border-l-4 border-amber-500 bg-amber-50/50 p-4 italic text-muted-foreground">
-            Note: Your resume and professional data are processed by Google's Gemini models to provide AI insights. By using the service, you consent to this processing as per our core functionality.
+          <h2 className="text-2xl font-bold">4. Data Security</h2>
+          <p className="text-muted-foreground leading-relaxed">
+            We implement industry-standard security measures, including 256-bit SSL encryption, to protect your data. However, no method of transmission over the internet is 100% secure. We continuously monitor our systems to prevent unauthorized access.
           </p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold">5. Data Retention</h2>
+          <h2 className="text-2xl font-bold">5. Governing Law (India)</h2>
           <p className="text-muted-foreground leading-relaxed">
-            We will only retain your personal data for as long as necessary to fulfill the purposes we collected it for, including for the purposes of satisfying any legal, accounting, or reporting requirements.
+            This Privacy Policy is governed by and construed in accordance with the laws of India. Any disputes arising from these terms are subject to the exclusive jurisdiction of the courts in India.
           </p>
         </section>
 
         <section className="bg-muted p-8 rounded-2xl">
-          <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-          <p className="text-muted-foreground">
-            If you have any questions about this privacy policy or our privacy practices, please contact us at:
+          <h2 className="text-2xl font-bold mb-4">Contact Our Privacy Officer</h2>
+          <p className="text-muted-foreground mb-4">
+            If you have any questions about this privacy policy or wish to exercise your data rights (including data deletion), please contact us:
           </p>
-          <p className="font-bold mt-2 text-primary">support@careerpilotai.com</p>
+          <div className="space-y-2">
+            <p className="font-bold text-primary">{SITE_CONFIG.supportEmail}</p>
+            <p className="text-sm text-muted-foreground">Attention: Data Protection Officer</p>
+          </div>
         </section>
       </div>
     </div>

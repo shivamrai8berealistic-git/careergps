@@ -22,15 +22,12 @@ function groupCheckpointsIntoLanes(checkpoints: RouteCheckpoint[]): RouteCheckpo
   const lanes: RouteCheckpoint[][] = [];
   let currentGroup: RouteCheckpoint[] = [];
   
-  // Simple heuristic: checkpoints with no dependencies OR with the same set of
-  // dependencies as their siblings can run in parallel.
   for (let i = 0; i < checkpoints.length; i++) {
     const cp = checkpoints[i];
     
     if (currentGroup.length === 0) {
       currentGroup.push(cp);
     } else {
-      // Check if this checkpoint can run in parallel with the current group
       const prevCp = currentGroup[0];
       const sameDeps = JSON.stringify(cp.dependencies.sort()) === JSON.stringify(prevCp.dependencies.sort());
       const neitherDependsOnOther = !cp.dependencies.includes(prevCp.id) && !prevCp.dependencies.includes(cp.id);
@@ -151,13 +148,11 @@ export default function RouteExecutionPage() {
                   const isCpLocked = cp.status === 'locked';
                   const globalCpIdx = checkpoints.findIndex(c => c.id === cp.id);
                   
-                  // Find which checkpoints are blocking this one
                   const blockingCheckpoints = cp.dependencies
                     .map(depId => checkpoints.find(c => c.id === depId))
                     .filter(Boolean) as RouteCheckpoint[];
                   
                   if (isParallelLane) {
-                    // Compact card for parallel layout
                     return (
                       <Card key={cp.id} className={`border transition-all ${isCpLocked ? 'opacity-60 bg-muted/30 border-dashed' : cp.status === 'completed' ? 'border-green-500/20 bg-green-50/10' : 'shadow-md border-primary/20'}`}>
                         <CardHeader className="pb-3">
@@ -182,7 +177,6 @@ export default function RouteExecutionPage() {
                             </Badge>
                           </div>
                           
-                          {/* Locked explanation */}
                           {isCpLocked && blockingCheckpoints.length > 0 && (
                             <div className="mt-3 p-2 bg-amber-50/50 border border-amber-200 rounded-lg text-xs text-amber-700 dark:bg-amber-950/20 dark:text-amber-300 dark:border-amber-800">
                               🔒 Requires: {blockingCheckpoints.map(b => <strong key={b.id}>{b.title}</strong>).reduce((prev, curr, i) => i === 0 ? [curr] : [...prev, ' + ', curr] as any, [] as any)}
@@ -208,10 +202,8 @@ export default function RouteExecutionPage() {
                     );
                   }
                   
-                  // Standard single-lane checkpoint
                   return (
                     <div key={cp.id} className="flex flex-col md:flex-row gap-4 md:gap-6 relative">
-                      {/* Node */}
                       <div className="flex flex-col items-center md:mt-1">
                         <div className={`w-12 h-12 rounded-full flex items-center justify-center border-4 border-background z-10 ${
                           cp.status === 'completed' ? 'bg-green-500 text-white' : 
@@ -224,7 +216,6 @@ export default function RouteExecutionPage() {
                         </div>
                       </div>
 
-                      {/* Content */}
                       <div className="flex-1 space-y-4 w-full">
                         <Card className={`border transition-all w-full overflow-hidden ${isCpLocked ? 'opacity-60 bg-muted/30 border-dashed' : cp.status === 'completed' ? 'border-green-500/20' : 'shadow-md border-primary/20'}`}>
                           <CardHeader className="pb-4">
@@ -240,7 +231,6 @@ export default function RouteExecutionPage() {
                               </Badge>
                             </div>
                             
-                            {/* Locked explanation */}
                             {isCpLocked && blockingCheckpoints.length > 0 && (
                               <div className="mt-3 p-3 bg-amber-50/50 border border-amber-200 rounded-lg text-sm text-amber-700 dark:bg-amber-950/20 dark:text-amber-300 dark:border-amber-800">
                                 🔒 This checkpoint requires completing {blockingCheckpoints.map((b, i) => (
@@ -298,7 +288,6 @@ function ModuleCard({ mod, modIdx, modChapters, route, router }: { mod: RouteMod
       const token = await user.getIdToken();
       await generateChaptersForModule(token, mod.id);
       toast.success("Module ready. Let's begin.");
-      // Hard reload to fetch new chapters and update states
       window.location.reload(); 
     } catch (e: any) {
       toast.error("We encountered an issue preparing your path. Please try again.");
@@ -339,11 +328,11 @@ function ModuleCard({ mod, modIdx, modChapters, route, router }: { mod: RouteMod
       ) : (
         <div className="space-y-2">
           {modChapters.map((ch) => (
-            <div key={ch.id} className={\`flex items-center justify-between p-3 rounded-lg border transition-colors \${
+            <div key={ch.id} className={`flex items-center justify-between p-3 rounded-lg border transition-colors ${
               ch.status === 'done' ? 'bg-green-50/50 border-green-200 dark:bg-green-950/10 dark:border-green-800' :
               ch.status === 'in_progress' ? 'bg-primary/5 border-primary/20' :
               'bg-background hover:bg-muted/50'
-            }\`}>
+            }`}>
               <div className="flex items-center gap-3 min-w-0">
                 {ch.status === 'done' ? (
                   <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
@@ -353,7 +342,7 @@ function ModuleCard({ mod, modIdx, modChapters, route, router }: { mod: RouteMod
                   <Circle className="w-5 h-5 text-muted-foreground flex-shrink-0" />
                 )}
                 <div className="min-w-0">
-                  <p className={\`text-sm font-medium truncate \${ch.status === 'done' ? 'line-through text-muted-foreground' : 'text-foreground'}\`}>
+                  <p className={`text-sm font-medium truncate ${ch.status === 'done' ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
                     {ch.title}
                   </p>
                   <div className="flex items-center gap-2 mt-1 flex-wrap">
@@ -361,11 +350,11 @@ function ModuleCard({ mod, modIdx, modChapters, route, router }: { mod: RouteMod
                      <span className="text-[10px] text-muted-foreground">{ch.preparation.estimatedMins}m</span>
                      
                      {ch.status === 'done' && ch.freshnessStatus !== 'fresh' && (
-                       <Badge variant="secondary" className={\`text-[10px] h-4 py-0 px-1 \${
+                       <Badge variant="secondary" className={`text-[10px] h-4 py-0 px-1 ${
                          ch.freshnessStatus === 'expired' ? 'bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400' : 
                          ch.freshnessStatus === 'stale' ? 'bg-orange-100 text-orange-700 dark:bg-orange-950/30 dark:text-orange-400' :
                          'bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400'
-                       }\`}>
+                       }`}>
                          <AlertTriangle className="w-3 h-3 mr-0.5 inline-block" />
                          {ch.freshnessStatus === 'expired' ? 'Re-validate' :
                           ch.freshnessStatus === 'stale' ? 'Refresh' : 'Aging'}
@@ -385,7 +374,7 @@ function ModuleCard({ mod, modIdx, modChapters, route, router }: { mod: RouteMod
                 variant={ch.status === 'done' && ch.freshnessStatus !== 'fresh' ? 'destructive' : 'ghost'}
                 size="sm"
                 className="flex-shrink-0 ml-2"
-                onClick={() => router.push(\`/routes/\${route.id}/chapter/\${ch.id}\`)}
+                onClick={() => router.push(`/routes/${route.id}/chapter/${ch.id}`)}
               >
                 {ch.status === 'done' && ch.freshnessStatus !== 'fresh' ? 'Refresh' : 'Open'}
                 <ChevronRight className="w-4 h-4 ml-1" />

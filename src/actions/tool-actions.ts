@@ -4,6 +4,8 @@ import { adminDb, admin } from '@/lib/firebase-admin';
 import { getAuth } from 'firebase-admin/auth';
 import { executeMatch } from '@/ai/engines/match-engine';
 import { logCareerEvent } from '@/lib/memory-engine';
+import { recordTransaction } from '@/lib/credit-ledger';
+import { CREDIT_COSTS } from '@/lib/credit-config';
 
 export async function acceptResumeChanges(idToken: string, jobId: string, updatedRoute: any) {
   const userId = await getUserId(idToken);
@@ -16,8 +18,18 @@ export async function acceptResumeChanges(idToken: string, jobId: string, update
 
   return { success: true };
 }
-import { recordTransaction } from '@/lib/credit-ledger';
-import { CREDIT_COSTS } from '@/lib/credit-config';
+
+export async function importJobAction(idToken: string, jobData: any) {
+  const userId = await getUserId(idToken);
+  
+  const jobRef = await adminDb.collection('users').doc(userId).collection('jobs').add({
+    ...jobData,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  });
+
+  return { success: true, id: jobRef.id };
+}
 
 async function getUserId(idToken: string): Promise<string> {
   if (!idToken) throw new Error('Unauthorized: No token provided');

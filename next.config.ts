@@ -1,6 +1,7 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ['@opentelemetry/exporter-jaeger', '@opentelemetry/winston-transport'],
   /* config options here */
   typescript: {
     ignoreBuildErrors: true,

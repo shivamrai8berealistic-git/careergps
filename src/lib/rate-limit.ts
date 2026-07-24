@@ -57,3 +57,40 @@ export async function checkRateLimit(userId: string, actionType: 'ai_action'): P
     return { allowed: false, remaining: 0, resetInMs };
   });
 }
+
+export function getClientIp(req: Request): string {
+  return req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || '127.0.0.1';
+}
+
+export async function isRateLimited(identifier: string, maxTokens: number = 5, windowMs: number = 60000): Promise<boolean> {
+  const limitRef = adminDb.collection('public_rate_limits').doc(identifier);
+  
+  try {
+    const result = await adminDb.runTransaction(async (transaction) => {
+      const doc = await transaction.get(limitRef);
+      const now = Date.now();
+      
+      if (!doc.exists) {
+        transaction.set(limitRef, { tokens: maxTokens - 1, lastUpdate: now });
+        return false;
+      }
+      
+      const data = doc.data()!;
+      const timePassed = now - data.lastUpdate;
+      const tokensToAdd = Math.floor(timePassed / windowMs) * maxTokens;
+      
+      let newTokens = Math.min(data.tokens + tokensToAdd, maxTokens);
+      
+      if (newTokens > 0) {
+        transaction.update(limitRef, { tokens: newTokens - 1, lastUpdate: now });
+        return false;
+      }
+      
+      return true;
+    });
+    return result;
+  } catch (error) {
+    console.error('Rate limit error:', error);
+    return false; // Fail open
+  }
+}

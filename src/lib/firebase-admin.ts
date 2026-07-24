@@ -1,5 +1,7 @@
 import * as admin from 'firebase-admin';
 import { getApps, initializeApp, cert } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
+import { getAuth } from 'firebase-admin/auth';
 
 if (getApps().length === 0) {
   try {
@@ -19,6 +21,6 @@ if (getApps().length === 0) {
     console.error('Firebase Admin init error:', error);
   }
 }
-export const adminDb = admin.firestore();
-export const adminAuth = admin.auth();
+export const adminDb = getFirestore();
+export const adminAuth = getAuth();
 export { admin };

@@ -25,7 +25,7 @@ About: {{{about}}}`
 export async function POST(req: Request) {
   try {
     const ip = getClientIp(req);
-    if (isRateLimited(ip)) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    if (await isRateLimited(ip)) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
 
     const { headline, about, targetRole } = await req.json();
     if (!headline) return NextResponse.json({ error: 'Missing headline' }, { status: 400 });

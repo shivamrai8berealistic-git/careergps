@@ -22,7 +22,7 @@ Job Description:
 export async function POST(req: Request) {
   try {
     const ip = getClientIp(req);
-    if (isRateLimited(ip)) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    if (await isRateLimited(ip)) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
 
     const { resume, jobDescription } = await req.json();
     if (!resume || !jobDescription) return NextResponse.json({ error: 'Missing input' }, { status: 400 });

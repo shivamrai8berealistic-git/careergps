@@ -15,7 +15,7 @@ Include one behavioral question, one technical/domain question, and one situatio
 export async function POST(req: Request) {
   try {
     const ip = getClientIp(req);
-    if (isRateLimited(ip)) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    if (await isRateLimited(ip)) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
 
     const { role } = await req.json();
     if (!role) return NextResponse.json({ error: 'Missing role' }, { status: 400 });

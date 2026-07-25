@@ -5,7 +5,7 @@ import { isRateLimited, getClientIp } from '@/lib/rate-limit';
 export async function POST(req: Request) {
   try {
     const ip = getClientIp(req);
-    if (isRateLimited(ip)) {
+    if (await isRateLimited(ip)) {
       return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
     }
 

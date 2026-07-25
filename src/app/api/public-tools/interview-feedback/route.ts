@@ -18,7 +18,7 @@ Answer: {{{answer}}}`
 export async function POST(req: Request) {
   try {
     const ip = getClientIp(req);
-    if (isRateLimited(ip)) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    if (await isRateLimited(ip)) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
 
     const { question, answer } = await req.json();
     if (!question || !answer) return NextResponse.json({ error: 'Missing input' }, { status: 400 });

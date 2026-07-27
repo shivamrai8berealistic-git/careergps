@@ -91,6 +91,6 @@ export async function isRateLimited(identifier: string, maxTokens: number = 5, w
     return result;
   } catch (error) {
     console.error('Rate limit error:', error);
-    return false; // Fail open
+    return true; // Fail closed (block request to protect Genkit on contention)
   }
 }

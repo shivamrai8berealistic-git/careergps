@@ -27,6 +27,7 @@ export default function CoverLettersPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedResult, setGeneratedResult] = useState<any>(null);
   const [copied, setCopied] = useState(false);
+  const [activeTab, setActiveTab] = useState("generator");
 
   const handleGenerate = async () => {
     if (!selectedJobId) {
@@ -117,7 +118,7 @@ export default function CoverLettersPage() {
         </div>
       </div>
 
-      <Tabs defaultValue="generator" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList>
           <TabsTrigger value="generator">
             <Wand2 className="w-4 h-4 mr-2" /> Generator
@@ -220,7 +221,7 @@ export default function CoverLettersPage() {
           <div className="grid gap-4">
              {coverLetters && coverLetters.length > 0 ? (
                coverLetters.map((cl: any) => (
-                 <Card key={cl.id} className="hover:bg-muted/50 cursor-pointer transition-colors" onClick={() => setGeneratedResult({ coverLetterText: cl.text })}>
+                 <Card key={cl.id} className="hover:bg-muted/50 cursor-pointer transition-colors" onClick={() => { setGeneratedResult({ coverLetterText: cl.text }); setActiveTab("generator"); }}>
                     <CardHeader className="p-4 flex flex-row items-center justify-between">
                        <div className="flex items-center gap-4">
                          <div className="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">

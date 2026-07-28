@@ -24,6 +24,7 @@ export default function InterviewPrepPage() {
   const [selectedJobId, setSelectedJobId] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedPrep, setGeneratedPrep] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState("generator");
 
   const handleGenerate = async () => {
     if (!selectedJobId) {
@@ -82,7 +83,7 @@ export default function InterviewPrepPage() {
         <p className="text-muted-foreground">AI-driven coaching tailored to your profile and the specific role.</p>
       </div>
 
-      <Tabs defaultValue="generator" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList>
           <TabsTrigger value="generator">
             <BrainCircuit className="w-4 h-4 mr-2" /> Generator
@@ -245,7 +246,7 @@ export default function InterviewPrepPage() {
           <div className="grid gap-4">
              {interviewPreps && interviewPreps.length > 0 ? (
                interviewPreps.map((prep: any) => (
-                 <Card key={prep.id} className="hover:bg-muted/50 cursor-pointer transition-colors" onClick={() => setGeneratedPrep(prep)}>
+                 <Card key={prep.id} className="hover:bg-muted/50 cursor-pointer transition-colors" onClick={() => { setGeneratedPrep(prep); setActiveTab("generator"); }}>
                     <CardHeader className="p-4 flex flex-row items-center justify-between">
                        <div className="flex items-center gap-4">
                          <div className="h-10 w-10 bg-indigo-500/10 rounded-full flex items-center justify-center text-indigo-500">

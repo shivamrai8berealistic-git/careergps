@@ -38,6 +38,11 @@ export async function POST(req: Request) {
     
     return NextResponse.json(output);
   } catch (error) {
+    console.error('LinkedIn Optimizer API error:', error);
+    const msg = error instanceof Error ? error.message.toLowerCase() : String(error).toLowerCase();
+    if (msg.includes('429') || msg.includes('quota') || msg.includes('rate limit') || msg.includes('too many')) {
+      return NextResponse.json({ error: 'Too many requests. AI capacity is currently at limit.' }, { status: 429 });
+    }
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

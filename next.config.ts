@@ -1,7 +1,7 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ['@opentelemetry/exporter-jaeger', '@opentelemetry/winston-transport'],
+  serverExternalPackages: ['@opentelemetry/exporter-jaeger', '@opentelemetry/winston-transport', 'firebase-admin'],
   /* config options here */
   typescript: {
     ignoreBuildErrors: true,

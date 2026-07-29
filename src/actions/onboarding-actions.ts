@@ -6,6 +6,7 @@ import { buildOnboardingTwin } from '@/ai/flows/onboarding-twin-builder';
 import { computeRoute } from '@/ai/flows/compute-route';
 import { claimProfileCompletionReward } from './credit-rewards';
 import { logCareerEvent } from '@/lib/memory-engine';
+import { after } from 'next/server';
 
 async function getUserId(idToken: string): Promise<string> {
   if (!idToken) throw new Error('Unauthorized: No token provided');
@@ -67,8 +68,8 @@ export async function submitOnboarding(idToken: string, rawInputs: any) {
   // Also reward them 5 credits for completing their profile
   await batch.commit();
 
-  // 4. Trigger initial Line X Calculation for the top target (fire and forget)
-  (async () => {
+  // 4. Trigger initial Line X Calculation for the top target (fire and forget safely)
+  after(async () => {
     try {
       const route = await computeRoute({
         userId,
@@ -78,7 +79,7 @@ export async function submitOnboarding(idToken: string, rawInputs: any) {
         userResume: rawInputs.rawResumeText
       });
       
-      await jobRef.update({
+      await adminDb.collection('users').doc(userId).collection('jobs').doc(jobRef.id).update({
         computedRoute: route,
         destinationState: 'ready',
         updatedAt: new Date()
@@ -86,7 +87,7 @@ export async function submitOnboarding(idToken: string, rawInputs: any) {
     } catch (error) {
       console.error("Failed to automatically compute first route:", error);
     }
-  })();
+  });
 
   // Attempt to credit reward (fire and forget)
   claimProfileCompletionReward(idToken).catch(e => console.error(e));

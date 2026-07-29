@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { executeRouteGeneration } from '@/lib/route-generation-engine';
 import { adminDb } from '@/lib/firebase-admin';
 
+export const maxDuration = 300; // 5 minutes (or plan max) to prevent Vercel timeout on AI tasks
+
 export async function POST(req: NextRequest) {
   // In a real production setup with Cloud Tasks, you would verify the OIDC token here.
   // For simplicity and adherence to the "Smallest Safe Fix", we accept requests
